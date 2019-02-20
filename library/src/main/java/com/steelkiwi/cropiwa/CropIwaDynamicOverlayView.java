@@ -111,7 +111,7 @@ class CropIwaDynamicOverlayView extends CropIwaOverlayView {
         return true;
     }
 
-    private void onStartGesture(MotionEvent ev) {
+    protected void onStartGesture(MotionEvent ev) {
         //Does user want to resize the crop area?
         if (tryAssociateWithCorner(ev)) {
             return;
@@ -124,18 +124,18 @@ class CropIwaDynamicOverlayView extends CropIwaOverlayView {
         }
     }
 
-    private void onPointerDown(MotionEvent ev) {
+    protected void onPointerDown(MotionEvent ev) {
         if (isResizing()) {
             tryAssociateWithCorner(ev);
         }
     }
 
-    private void onPointerUp(MotionEvent ev) {
+    protected void onPointerUp(MotionEvent ev) {
         int id = ev.getPointerId(ev.getActionIndex());
         fingerToCornerMapping.remove(id);
     }
 
-    private void onPointerMove(MotionEvent ev) {
+    protected void onPointerMove(MotionEvent ev) {
         if (isResizing()) {
             for (int i = 0; i < ev.getPointerCount(); i++) {
                 int id = ev.getPointerId(i);
@@ -158,7 +158,7 @@ class CropIwaDynamicOverlayView extends CropIwaOverlayView {
         }
     }
 
-    private void onEndGesture() {
+    protected void onEndGesture() {
         if (cropRectBeforeDrag != null && !cropRectBeforeDrag.equals(cropRect)) {
             notifyNewBounds();
         }

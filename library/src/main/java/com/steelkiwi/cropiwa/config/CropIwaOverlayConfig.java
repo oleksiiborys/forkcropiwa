@@ -39,6 +39,7 @@ public class CropIwaOverlayConfig {
                 .setMinHeight(r.dimen(R.dimen.cropiwa_default_min_height))
                 .setAspectRatio(new AspectRatio(2, 1))
                 .setShouldDrawGrid(true)
+                .setZoomableCrop(false)
                 .setDynamicCrop(true);
         CropIwaShape shape = new CropIwaRectShape(config);
         config.setCropShape(shape);
@@ -91,6 +92,9 @@ public class CropIwaOverlayConfig {
             c.setCropShape(ta.getInt(R.styleable.CropIwaView_ci_crop_shape, 0) == 0 ?
                     new CropIwaRectShape(c) :
                     new CropIwaOvalShape(c));
+            c.setZoomableCrop(ta.getBoolean(
+                    R.styleable.CropIwaView_ci_zoomable_dynamic_aspect_ratio,
+                    c.isZoomableDynamicCrop()));
             c.setDynamicCrop(ta.getBoolean(
                     R.styleable.CropIwaView_ci_dynamic_aspect_ratio,
                     c.isDynamicCrop()));
@@ -118,6 +122,7 @@ public class CropIwaOverlayConfig {
     private float cropScale;
 
     private boolean isDynamicCrop;
+    private boolean isZoomableDynamicCrop;
     private boolean shouldDrawGrid;
     private CropIwaShape cropShape;
 
@@ -177,6 +182,9 @@ public class CropIwaOverlayConfig {
         return isDynamicCrop;
     }
 
+    public boolean isZoomableDynamicCrop() {
+        return isZoomableDynamicCrop;
+    }
     public float getCropScale() {
         return cropScale;
     }
@@ -255,6 +263,11 @@ public class CropIwaOverlayConfig {
 
     public CropIwaOverlayConfig setDynamicCrop(boolean enabled) {
         this.isDynamicCrop = enabled;
+        return this;
+    }
+
+    public CropIwaOverlayConfig setZoomableCrop(boolean enabled) {
+        this.isZoomableDynamicCrop = enabled;
         return this;
     }
 

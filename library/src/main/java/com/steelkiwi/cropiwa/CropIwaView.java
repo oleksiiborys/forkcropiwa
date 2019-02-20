@@ -90,9 +90,13 @@ public class CropIwaView extends FrameLayout {
         if (imageView == null || overlayConfig == null) {
             throw new IllegalStateException("imageView and overlayConfig must be initialized before calling this method");
         }
-        overlayView = overlayConfig.isDynamicCrop() ?
-                new CropIwaDynamicOverlayView(getContext(), overlayConfig) :
-                new CropIwaOverlayView(getContext(), overlayConfig);
+        if (overlayConfig.isZoomableDynamicCrop()) {
+            overlayView = new CropIwaZoomableDynamicOverlayView(getContext(), overlayConfig);
+        } else {
+            overlayView = overlayConfig.isDynamicCrop() ?
+                    new CropIwaDynamicOverlayView(getContext(), overlayConfig) :
+                    new CropIwaOverlayView(getContext(), overlayConfig);
+        }
         overlayView.setNewBoundsListener(imageView);
         imageView.setImagePositionedListener(overlayView);
         addView(overlayView);
@@ -112,14 +116,14 @@ public class CropIwaView extends FrameLayout {
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         //I think this "redundant" if statements improve code readability
         try {
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            gestureDetector.onDown(ev);
-            return false;
-        }
-        if (overlayView.isResizing() || overlayView.isDraggingCropArea()) {
-            return false;
-        }
-        return true;
+            if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+                gestureDetector.onDown(ev);
+                return false;
+            }
+            if (overlayView.isResizing() || overlayView.isDraggingCropArea()) {
+                return false;
+            }
+            return true;
         } catch (IllegalArgumentException e) {
             //e.printStackTrace();
             return false;

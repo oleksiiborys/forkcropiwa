@@ -27,6 +27,7 @@
         <attr name="ci_overlay_color" format="color" />
 
         <attr name="ci_dynamic_aspect_ratio" format="boolean" />
+        <attr name="ci_zoomable_dynamic_aspect_ratio" format="boolean" />
         <attr name="ci_aspect_ratio_w" format="integer" />
         <attr name="ci_aspect_ratio_h" format="integer" />
 
