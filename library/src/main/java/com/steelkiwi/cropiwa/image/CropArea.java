@@ -37,12 +37,10 @@ public class CropArea {
                 findRealCoordinate(bitmap.getHeight(), cropRect.top, imageRect.height()),
                 findRealCoordinate(bitmap.getWidth(), cropRect.width(), imageRect.width()),
                 findRealCoordinate(bitmap.getHeight(), cropRect.height(), imageRect.height()));
-        return immutableCropped.copy(immutableCropped.getConfig(), true);
+        return immutableCropped;
     }
-
 
     private int findRealCoordinate(int imageRealSize, int cropCoordinate, float cropImageSize) {
         return Math.round((imageRealSize * cropCoordinate) / cropImageSize);
     }
-
 }
